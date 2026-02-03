@@ -1,19 +1,16 @@
-
 import React from 'react';
-// @ts-ignore - Fixing "Module 'react-router-dom' has no exported member" errors
 import { useNavigate } from 'react-router-dom';
 import { Clock, MapPin, ChevronRight, PackageCheck, Package } from 'lucide-react';
 import { useApp } from '../store/AppContext';
-import { OrderStatus, CourierStatus } from '../types';
+import { Order, OrderStatus, CourierStatus } from '../types';
 
 const DeliveryScreen: React.FC = () => {
   const { orders, courierStatus, acceptOrders, returnToCFZ, returnTimeLeft } = useApp();
   const navigate = useNavigate();
 
-  // Приоритет заказов для стабильной сортировки (первый всегда сверху)
   const orderPriority: Record<string, number> = {
-    'ORD-6737': 1, // Невский 3
-    'ORD-6742': 2  // Невский 5
+    'ORD-6737': 1,
+    'ORD-6742': 2
   };
 
   const allVisibleOrders = [...orders].sort((a, b) => 
@@ -29,12 +26,11 @@ const DeliveryScreen: React.FC = () => {
     return `${m}:${s < 10 ? '0' : ''}${s}`;
   };
 
-  const renderOrderCard = (order: any) => {
+  const renderOrderCard = (order: Order) => {
     const isTerminal = [OrderStatus.DELIVERED, OrderStatus.CANCELLED].includes(order.status);
     const isCancelled = order.status === OrderStatus.CANCELLED;
     const isDelivered = order.status === OrderStatus.DELIVERED;
 
-    // Компактный вид для завершенных заказов (согласно скриншоту)
     if (isTerminal) {
       const historyBg = isCancelled 
         ? 'bg-[#FFFBEB]/50 border-[#FEF3C7]' 
@@ -47,7 +43,7 @@ const DeliveryScreen: React.FC = () => {
         <div 
           key={order.id} 
           onClick={() => navigate(`/order/${order.id}`)}
-          className={`${historyBg} rounded-[1.5rem] p-4 shadow-sm border transition-all active:scale-[0.98] flex justify-between items-center mb-3`}
+          className={`${historyBg} rounded-[1.5rem] p-4 shadow-sm border transition-all active:scale-[0.98] flex justify-between items-center mb-3 cursor-pointer`}
         >
           <div className="flex gap-4 items-center">
             <div className={`w-1.5 h-10 rounded-full ${accentColor}`}></div>
@@ -68,12 +64,11 @@ const DeliveryScreen: React.FC = () => {
       );
     }
 
-    // Детальный вид для активных заказов
     return (
       <div 
         key={order.id} 
         onClick={() => navigate(`/order/${order.id}`)}
-        className="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100 transition-all active:scale-[0.97] overflow-hidden relative mb-4"
+        className="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100 transition-all active:scale-[0.97] overflow-hidden relative mb-4 cursor-pointer"
       >
         <div className="flex justify-between items-start mb-4">
           <div>
@@ -100,7 +95,7 @@ const DeliveryScreen: React.FC = () => {
         </div>
         
         <div className="flex justify-end items-center pt-4 border-t border-gray-50">
-           <div className="text-brand font-black text-[11px] uppercase flex items-center gap-0.5 tracking-widest cursor-pointer">
+           <div className="text-brand font-black text-[11px] uppercase flex items-center gap-0.5 tracking-widest">
              ДЕТАЛИ <ChevronRight className="w-4 h-4" />
            </div>
         </div>
@@ -110,13 +105,13 @@ const DeliveryScreen: React.FC = () => {
 
   return (
     <div className="p-4 space-y-4">
-      <div className="flex flex-col items-center py-6">
-        <h1 className="text-2xl font-black text-[#1A1C1E] tracking-tight uppercase mb-3 text-center">
+      <div className="flex flex-col items-center py-6 text-center">
+        <h1 className="text-2xl font-black text-[#1A1C1E] tracking-tight uppercase mb-3">
           Задания на доставку
         </h1>
         
         {courierStatus === CourierStatus.RETURN_TO_CFZ && (
-          <div className="flex items-center gap-2 bg-[#FFF1F4] border border-[#FFD6DC] px-5 py-2.5 rounded-full text-brand font-black text-xs uppercase tracking-widest shadow-sm text-center">
+          <div className="flex items-center gap-2 bg-[#FFF1F4] border border-[#FFD6DC] px-5 py-2.5 rounded-full text-brand font-black text-xs uppercase tracking-widest shadow-sm">
             <Clock className="w-4 h-4" />
             <span>Вернись в ЦФЗ: {formatTime(returnTimeLeft)}</span>
           </div>
@@ -138,10 +133,10 @@ const DeliveryScreen: React.FC = () => {
       </div>
 
       {isReadyToAccept && courierStatus === CourierStatus.DELIVERY_ASSIGNED && (
-        <div className="fixed bottom-24 left-0 right-0 px-4 max-w-md mx-auto z-40 animate-in fade-in slide-in-from-bottom-4">
+        <div className="fixed bottom-24 left-0 right-0 px-4 max-w-md mx-auto z-40">
           <button 
             onClick={(e) => { e.stopPropagation(); acceptOrders(); }}
-            className="w-full bg-green-500 hover:bg-green-600 text-white font-black py-5 rounded-[2.5rem] shadow-[0_12px_40px_-12px_rgba(34,197,94,0.5)] transition-all flex items-center justify-center gap-3 active:scale-95"
+            className="w-full bg-green-500 hover:bg-green-600 text-white font-black py-5 rounded-[2.5rem] shadow-xl transition-all flex items-center justify-center gap-3 active:scale-95"
           >
             <PackageCheck className="w-7 h-7" />
             <span className="text-xl tracking-tight uppercase">Принять заказ</span>
@@ -153,7 +148,7 @@ const DeliveryScreen: React.FC = () => {
         <div className="fixed bottom-24 left-0 right-0 px-4 max-w-md mx-auto z-40">
            <button 
               onClick={returnToCFZ}
-              className="w-full bg-green-500 text-white font-black py-6 rounded-2rem shadow-2xl shadow-green-200 transition-all active:scale-95 uppercase tracking-tight text-lg"
+              className="w-full bg-green-500 text-white font-black py-6 rounded-2rem shadow-2xl transition-all active:scale-95 uppercase tracking-tight text-lg"
             >
               Я в ЦФЗ
             </button>
