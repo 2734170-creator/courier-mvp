@@ -1,10 +1,8 @@
-
 import React from 'react';
-// @ts-ignore - Fixing "Module 'react-router-dom' has no exported member" errors
 import { useLocation, useNavigate } from 'react-router-dom';
 import { User, Package, MessageSquare, Bell } from 'lucide-react';
-import { useApp } from '../store/AppContext';
-import { OrderStatus } from '../types';
+import { useApp } from '../store/AppContext.tsx';
+import { OrderStatus } from '../types.ts';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const navigate = useNavigate();
