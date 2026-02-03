@@ -8,12 +8,11 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './'),
     },
-    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json']
+    extensions: ['.tsx', '.ts', '.jsx', '.js', '.json']
   },
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-    sourcemap: false,
     rollupOptions: {
       output: {
         manualChunks: {
