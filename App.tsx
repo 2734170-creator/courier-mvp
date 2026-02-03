@@ -1,6 +1,4 @@
-
 import React from 'react';
-// @ts-ignore - Fixing "Module 'react-router-dom' has no exported member" errors
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AppProvider } from './store/AppContext';
 import Layout from './components/Layout';
