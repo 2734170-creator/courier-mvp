@@ -24,9 +24,6 @@
                 light: '#FFEDF1',
                 dark: '#D62D52',
               }
-            },
-            borderRadius: {
-              'squircle': '2rem',
             }
           }
         }
@@ -38,17 +35,16 @@
             background-color: #f8f9fa;
             -webkit-tap-highlight-color: transparent;
             user-select: none;
+            overflow-x: hidden;
         }
         .safe-bottom {
             padding-bottom: calc(env(safe-area-inset-bottom) + 12px);
         }
-        .squircle {
-          border-radius: 2rem;
+        .animate-in {
+          animation-duration: 0.3s;
+          animation-fill-mode: both;
         }
-        /* Smooth scrolling for iOS */
-        * {
-            -webkit-overflow-scrolling: touch;
-        }
+        * { -webkit-overflow-scrolling: touch; }
     </style>
 <script type="importmap">
 {
