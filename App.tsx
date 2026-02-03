@@ -1,12 +1,12 @@
 import React from 'react';
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AppProvider } from './store/AppContext';
-import Layout from './components/Layout';
-import ProfileScreen from './screens/ProfileScreen';
-import DeliveryScreen from './screens/DeliveryScreen';
-import OrderDetailsScreen from './screens/OrderDetailsScreen';
-import CancelOrderScreen from './screens/CancelOrderScreen';
-import SupportScreen from './screens/SupportScreen';
+import Layout from './components/Layout.tsx';
+import ProfileScreen from './screens/ProfileScreen.tsx';
+import DeliveryScreen from './screens/DeliveryScreen.tsx';
+import OrderDetailsScreen from './screens/OrderDetailsScreen.tsx';
+import CancelOrderScreen from './screens/CancelOrderScreen.tsx';
+import SupportScreen from './screens/SupportScreen.tsx';
 
 const App: React.FC = () => {
   return (
