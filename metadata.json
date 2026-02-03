@@ -1,0 +1,14 @@
+
+{
+  "name": "Курьер MVP",
+  "short_name": "Курьер",
+  "description": "Профессиональный инструмент курьера для управления доставками последней мили.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f8f9fa",
+  "theme_color": "#FA3D67",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ]
+}
